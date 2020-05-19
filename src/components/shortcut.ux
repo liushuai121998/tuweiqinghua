@@ -1,14 +1,11 @@
 <template>
     <div class="short-cut-wrap">
         <div class="short-cut" if="showShortCut">
+            <image onclick="cancel" class="close" src="/Common/close.png"></image>
             <image class="logo" src="/Common/logo.png"></image>
-            <div class="short-cut__content">
-                <text class="content-title">创立桌面图标</text>
-                <text class="content-sub-title">点击即用，方便快捷，不占空间</text>
-            </div>
+            <text class="content-title">添加至桌面快捷方式</text>
             <div class="btns">
-                <text class="confirm-btn" onclick="confirm">立即开启</text>
-                <text class="cancel-btn" onclick="cancel">取消</text>
+                <text class="confirm-btn" onclick="confirm">立即添加</text>
             </div>
         </div>
     </div>
@@ -46,52 +43,51 @@ export default {
     display: flex;
     justify-content: center;
     /* padding: 0 20px; */
-    /* position: fixed;
+    position: fixed;
     left: 0;
-    bottom: 0; */
-    margin-bottom: 20px;
-    margin-top: 40px;
+    bottom: 20px;
 }
 .short-cut {
     width: 100%;
-    height: 150px;
-    background-color: rgba(255, 255, 255, .5);
-    border-radius: 20px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, .5);
+    /* border-radius: 20px; */
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 25px;
 }
 .logo {
-    width: 120px;
-}
-.short-cut__content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-left: 25px;
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .content-title {
-    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    font-size: 36px;
     font-weight: bold;
-    margin-bottom: 15px;
-}
-.content-sub-title {
-    font-size: 24px;
-    color: #999;
+    color: #fff;
 }
 .btns {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-.cancel-btn {
-    font-size: 28px;
-    margin-top: 15px;
+    align-items: flex-end;
+    /* align-items: center; */
+    flex: 1;
 }
 .confirm-btn {
-    color: #4B90E1;
-    font-size: 28px;
+    color: #fff;
+    font-size: 32px;
+    background-color: #4B90E1;
+    padding: 10px;
+    border-radius: 4px;
+}
+.close {
+    width: 40px;
+    height: 40px;
+    
 }
 </style>
 
