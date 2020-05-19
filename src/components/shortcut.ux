@@ -1,0 +1,95 @@
+<template>
+    <div class="short-cut-wrap">
+        <div class="short-cut" if="showShortCut">
+            <image class="logo" src="/Common/logo.png"></image>
+            <div class="short-cut__content">
+                <text class="content-title">创立桌面图标</text>
+                <text class="content-sub-title">点击即用，方便快捷，不占空间</text>
+            </div>
+            <div class="btns">
+                <text class="confirm-btn" onclick="confirm">立即开启</text>
+                <text class="cancel-btn" onclick="cancel">取消</text>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import shortcut from '@system.shortcut';
+export default {
+    data: {
+        showShortCut: true
+    },
+    onInit() {
+        // 是否已经创建了图标
+        shortcut.hasInstalled({
+            success: (ret) => {
+                if (ret) {
+                    this.showShortCut = false
+                } else {
+                    this.showShortCut = true
+                }
+            }
+        })
+    },
+    cancel () {
+        this.showShortCut = false
+    },
+    confirm () {
+        this.$app.$def.createShortcut().then(() => {
+            this.showShortCut = false
+        })
+    }
+}
+</script>
+<style>
+.short-cut-wrap {
+    display: flex;
+    justify-content: center;
+    /* padding: 0 20px; */
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+.short-cut {
+    width: 100%;
+    height: 150px;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 25px;
+}
+.logo {
+    width: 120px;
+}
+.short-cut__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 25px;
+}
+.content-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.content-sub-title {
+    font-size: 24px;
+    color: #999;
+}
+.btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cancel-btn {
+    font-size: 28px;
+    margin-top: 15px;
+}
+.confirm-btn {
+    color: #4B90E1;
+    font-size: 28px;
+}
+</style>
+
