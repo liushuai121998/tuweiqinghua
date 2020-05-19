@@ -1,4 +1,4 @@
-<import name="short-cut" src="../components/shortcutNew"></import>
+<import name="short-cut" src="../components/shortcut"></import>
 
 <template>
   <!-- template里只能有一个根节点 -->

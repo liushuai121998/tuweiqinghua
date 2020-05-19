@@ -15,12 +15,12 @@ export default Custom_page({
     this.getData()
     //   this.queryFooterAd()
     this.dateNow = this.$app.$def.parseTime(Date.now(), '{y}-{m}-{d}')
-    // this.insertAd()
-    // this.queryFooterAd()
+    this.insertAd()
+    this.queryFooterAd()
   },
   async getData() {
     const $appDef = this.$app.$def
-    const {data} = await $appDef.$http.get(`/index?key=${$appDef.key}`)
+    const {data} = await $appDef.$http.get(`/saylove/index?key=${$appDef.key}`)
     if(data.code === 200) {
       this.newsList = data.newslist
     }
