@@ -67,8 +67,8 @@ export default {
     display: flex;
     flex-direction: column;
     font-size: 36px;
-    font-weight: bold;
-    color: #fff;
+    /* font-weight: bold; */
+    color: #999;
 }
 .btns {
     display: flex;
@@ -79,10 +79,10 @@ export default {
 }
 .confirm-btn {
     color: #fff;
-    font-size: 32px;
+    font-size: 30px;
     background-color: #4B90E1;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 15px 10px;
+    border-radius: 8px;
 }
 .close {
     width: 40px;
