@@ -65,6 +65,7 @@
   .content__reply {
     display: flex;
     flex-direction: column;
+    height: 460px;
   }
   .content__reply text {
     font-size: 28px;
@@ -198,4 +199,18 @@
   .content__reply .time {
       color: #999;
       margin-bottom: 10px;
+      text-align: center;
   }
+
+  .content-text {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+}
+.content-text__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

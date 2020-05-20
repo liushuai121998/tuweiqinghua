@@ -13,7 +13,11 @@
           <list class="content-item" onlongpress="longPress(item)">
             <list-item type="content-reply" class="content__reply">
               <text class="time">{{dateNow}}</text>
-              <text>{{item.content}}</text>
+              <div class="content-text">
+                <div class="content-text__content"> 
+                  <text>{{item.content}}</text>
+                </div>
+              </div>
             </list-item>
           </list>
           <div class="content__copy" onlongpress="longPress(item)">
