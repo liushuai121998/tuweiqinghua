@@ -2,6 +2,7 @@ import router from '@system.router'
 import clipboard from '@system.clipboard'
 import prompt from '@system.prompt'
 import ad from '@service.ad'
+import device from '@system.device'
 export default Custom_page({
   // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
   private: {
@@ -9,20 +10,51 @@ export default Custom_page({
     footerAdShow: false,
     modalShow: false,
     dateNow: '',
-    footerAd: {}
+    footerAd: {},
+    currentIndex: 0,
+    collectIcon: '/Common/collect-icon.png',
+    isCollect: false,
+    collectList: []
   },
-  onInit() {
+  async onInit() {
     this.getData()
     //   this.queryFooterAd()
     this.dateNow = this.$app.$def.parseTime(Date.now(), '{y}-{m}-{d}')
-    this.insertAd()
-    this.queryFooterAd()
+    const deviceInfo = await device.getInfo()
+    const brand = deviceInfo.data.brand
+    if(brand === 'OPPO') {
+      console.log('xxx')
+    } else if(brand === 'vivo') {
+      this.insertAd()
+      this.queryFooterAd()
+    }
   },
   async getData() {
     const $appDef = this.$app.$def
     const {data} = await $appDef.$http.get(`/saylove/index?key=${$appDef.key}`)
     if(data.code === 200) {
       this.newsList = data.newslist
+      $appDef.storageHandle.get('list').then(d => {
+        if(d) {
+          try{
+            let res = JSON.parse(d)
+            this.collectList = [...res]
+            if(this.newsList[0] && res.indexOf(this.newsList[0].content) >= 0) {
+              this.collectIcon = '/Common/collect-active.png'
+              this.isCollect = true
+            } else {
+              this.collectIcon = '/Common/collect-icon.png'
+              this.isCollect = false
+            }
+          }catch(err) {
+            this.collectIcon = '/Common/collect-icon.png'
+            this.isCollect = false
+          }
+        } else {
+          this.collectIcon = '/Common/collect-icon.png'
+          this.isCollect = false
+        }
+      })
     }
   },
   onShow() {
@@ -47,7 +79,7 @@ export default Custom_page({
     }
     //   原生广告
     this.nativeAd = ad.createNativeAd({
-        adUnitId: 'f9beec05c09d4575b689c2c094ef25b7'
+        adUnitId: '2d6b2c2182664ba3a2667ce8f81d8bc9'
     })
     this.nativeAd.load()
     this.nativeAd.onLoad((res) => {
@@ -80,7 +112,7 @@ export default Custom_page({
   insertAd() {
     if(ad.createInterstitialAd) {
       this.interstitialAd = ad.createInterstitialAd({
-          adUnitId: '6725456cd28d46f18f94bee23e748936'
+          adUnitId: 'd226656c3adf4623adc0f58e2aa3b656'
       })
       this.interstitialAd.onLoad(()=> {
           this.interstitialAd.show();
@@ -92,5 +124,39 @@ export default Custom_page({
   },
   closeModal() {
       this.modalShow = false
-  }
+  },
+  changeTabactive(e) {
+    this.currentIndex = e.index
+  },
+  collect(item) {
+    const $appDef = this.$app.$def
+    $appDef.storageHandle.get('list').then(d => {
+      if(d) {
+        try{
+          let data = JSON.parse(d)
+          if(data.indexOf(item.content) < 0) {
+            data.push(item.content)
+            $appDef.storageHandle.set('list', JSON.stringify(data)).then(res => {
+              this.collectList = [...data]
+              prompt.showToast({
+                message: '收藏成功'
+              })
+              this.isCollect = true
+            })
+          }
+        } catch(err) {
+          console.log(err)
+        }
+      } else {
+        $appDef.storageHandle.set('list', JSON.stringify([item.content])).then(res => {
+          this.collectList = [item.content]
+          prompt.showToast({
+            message: '收藏成功'
+          })
+          this.isCollect = true
+        })
+      }
+    })
+    this.collectIcon = '/Common/collect-active.png'
+  },
 })

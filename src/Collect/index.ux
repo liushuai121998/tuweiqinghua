@@ -1,0 +1,35 @@
+<template>
+    <div class="collect-page">
+        <list class="collect-list">
+            <block for="{{(index, item) in list}}">
+                <list-item type="{{index}}" class="collect-list__item">
+                    <div class="collect-list__item__title">
+                        <div class="collect-list__item__title__text">
+                            <!-- <text>有点怪</text> -->
+                        </div>
+                    </div>
+                    <div class="collect-list__item__content">
+                        <text class="collect-list__item__content__text">{{item}}</text>
+                        <text class="watch-more" @click="toDetail(item)">点击查看>></text>
+                    </div>
+                    <div class="heart-wrap">
+                        <stack>
+                            <image class="heart" src="/Common/heart.png"></image>
+                            <text class="heart__index">{{index + 1}}</text>
+                        </stack>
+                    </div>
+                </list-item>
+            </block>
+            
+        </list>
+    </div>
+</template>
+
+<script src="./index.js">
+</script>
+
+<style lang="less" scoped>
+@import './index.less';
+</style>
+
+

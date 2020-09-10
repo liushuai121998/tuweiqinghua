@@ -1,3 +1,4 @@
+import storage from '@system.storage';
 /**
  * 显示菜单
  */
@@ -114,8 +115,61 @@ function parseTime(time, cFormat) {
   return time_str
 }
 
+let storageHandle = {
+  get(key) {
+    return new Promise((resolve, reject) => {
+      storage.get({
+        key: key,
+        success (data) {
+            resolve(data)
+        },
+        fail (err) {
+          reject(err)
+        }
+      })
+    })
+  },
+  set(key, value) {
+    if(typeof value === 'object'){
+      value = JSON.stringify(value)
+    }
+    return new Promise((resolve, reject) => {
+      storage.set({
+        key,
+        value,
+        success (data) {
+          resolve(data)
+        },
+        fail (err) {
+          reject(err)
+        }
+      })
+    })
+  },
+  clear() {
+    // 清空
+    storage.clear()
+  },
+  delete(key) {
+    // 删除
+    return new Promise((resolve, reject) => {
+      storage.delete({
+        key,
+        success() {
+          resolve()
+        },
+        fail() {
+          reject()
+        }
+      })
+    })
+  }
+}
+
+
 export default {
   showMenu,
   createShortcut,
-  parseTime
+  parseTime,
+  storageHandle
 }

@@ -1,8 +1,8 @@
 {
   "package": "com.tuweiqinghua.package",
-  "name": "土味情话",
-  "versionName": "1.0.1",
-  "versionCode": "1",
+  "name": "一同土味情话",
+  "versionName": "1.0.7",
+  "versionCode": "7",
   "minPlatformVersion": "1060",
   "icon": "/Common/logo.png",
   "features": [
@@ -17,7 +17,8 @@
     },
     { "name": "system.fetch" },
     { "name": "system.clipboard" },
-    {"name":"service.ad"}
+    {"name":"service.ad"},
+    { "name": "system.device" }
   ],
   "permissions": [
     {
@@ -25,12 +26,16 @@
     }
   ],
   "config": {
-    "logLevel": "off"
+    "logLevel": "off",
+    "designWidth": 1080
   },
   "router": {
     "entry": "Home",
     "pages": {
       "Home": {
+        "component": "index"
+      },
+      "Detail": {
         "component": "index"
       }
     }
@@ -41,7 +46,12 @@
     "menu": true,
     "pages": {
       "Home": {
-        "titleBarText": "土味情话",
+        "titleBarText": "一同土味情话",
+        "menu": false,
+        "titleBar": false
+      },
+      "Detail": {
+        "titleBarText": "一同土味情话",
         "menu": false,
         "titleBar": false
       }

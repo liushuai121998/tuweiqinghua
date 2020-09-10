@@ -1,56 +1,70 @@
 <import name="short-cut" src="../components/shortcut"></import>
+<import name="collect-page" src="../Collect/index.ux"></import>
 
 <template>
   <!-- template里只能有一个根节点 -->
   <div class="home">
-    <image src="/Common/bg.png" class="bg"></image>
     <div class="title">
-      <image class="title__icon" src="/Common/title-icon.png"></image>
+      <image class="title__icon" src="/Common/title-logo.png"></image>
     </div>
-    <div class="main">
-      <div class="content">
-        <block for="{{item in newsList}}">
-          <list class="content-item" onlongpress="longPress(item)">
-            <list-item type="content-reply" class="content__reply">
-              <text class="time">{{dateNow}}</text>
-              <div class="content-text">
-                <div class="content-text__content"> 
-                  <text>{{item.content}}</text>
-                </div>
-              </div>
-            </list-item>
-          </list>
-          <div class="content__copy" onlongpress="longPress(item)">
-            <image src="/Common/copy-icon.png" class="content__copy__icon"></image>
-            <text class="content__copy__text">长按进行复制</text>
+    <tabs onchange="changeTabactive" index="{{currentIndex}}">
+      <tab-content>
+        <div class="main">
+          <div class="content">
+            <block for="{{item in newsList}}">
+              <list class="content-item">
+                <list-item type="content-reply" class="content__reply">
+                  <!-- <text class="time">{{dateNow}}</text> -->
+                  <div class="collect-wrap">
+                    <div class="collect" @click="collect(item)">
+                      <image src="{{collectIcon}}"></image>
+                      <text>{{isCollect ? '已收藏' : '点我收藏'}}</text>
+                    </div>
+                  </div>
+                  <div class="content-text">
+                    <div class="content-text__content"> 
+                      <text>{{item.content}}</text>
+                    </div>
+                    <div class="copy" @click="longPress(item)">
+                      <image src="/Common/copy.png"></image>
+                      <text>复制文本</text>
+                    </div>
+                  </div>
+                </list-item>
+              </list>
+            </block>
+            <div class="content-header-bg">
+              <text>{{dateNow}}</text>
+            </div>
           </div>
+          <div class="recharge-btn" onclick="getData">
+            <image class="recharge__icon" src="/Common/change.png"></image>
+            <text class="recharge__text">换一句</text>
+          </div>
+          
+        </div>
+        <collect-page visible="{{currentIndex === 1}}" list="{{collectList}}"></collect-page>
+      </tab-content>
+      <tab-bar class="tab-bar">
+        <text class="{{currentIndex === 0 ? 'active' : ''}} tab-bar__item">
+          土味广场
+        </text>
+        <text class="{{currentIndex === 1 ? 'active' : ''}} tab-bar__item">
+          我的收藏
+        </text>
+      </tab-bar>
+    </tabs>
+    
+    <div class="footer-ad" if="{{footerAdShow}}" onclick="reportAdClick" onappear="reportAdShow">
+      <div class="footer-ad__img">
+        <block if="{{footerAd.icon}}">
+          <image class="footer-ad__img__icon" src="{{footerAd.icon}}"></image>
         </block>
+        <image class="footer-ad__img__main" src="{{footerAd.imgUrlList ? footerAd.imgUrlList[0] : ''}}"></image>
+        <text class="click-btn__text">{{footerAd.clickBtnText || '查看详情'}}</text>
       </div>
-      <div class="recharge-btn" onclick="getData">
-        <image class="recharge__icon" src="/Common/change-icon.png"></image>
-        <text class="recharge__text">换一句</text>
-      </div>
-      <div class="footer-ad" if="{{footerAdShow}}" onclick="reportAdClick" onappear="reportAdShow">
-        <div class="footer-ad__img">
-          <block if="{{footerAd.icon}}">
-            <image class="footer-ad__img__icon" src="{{footerAd.icon}}"></image>
-          </block>
-          <image class="footer-ad__img__main" src="{{footerAd.imgUrlList ? footerAd.imgUrlList[0] : ''}}"></image>
-          <text class="click-btn__text">{{footerAd.clickBtnText || '查看详情'}}</text>
-        </div>
-        <div class="ad-tip">
-          <text>广告</text>
-        </div>
-        <!-- <image onclick="hideFooterAd" class="close footer-close" src="/Common/close.png"></image> -->
-      </div>
-    </div>
-    <div class="modal" if="{{modalShow}}">
-      <div class="mask">
-      </div>
-      <div class="modal-content">
-        <div class="insert-ad">
-          <image onclick="closeModal" src="/Common/close.png" class="close"></image>
-        </div>
+      <div class="ad-tip">
+        <text>广告</text>
       </div>
     </div>
     <short-cut></short-cut>
@@ -60,6 +74,6 @@
 <script src="./index.js">
 </script>
 
-<style>
-  @import './index.css';
+<style lang="less" scoped>
+  @import './index.less';
 </style>

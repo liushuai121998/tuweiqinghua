@@ -1,0 +1,57 @@
+<import name="short-cut" src="../components/shortcut"></import>
+
+<template>
+  <!-- template里只能有一个根节点 -->
+  <div class="home">
+    <div class="title">
+      <image class="title__icon" src="/Common/title-logo.png"></image>
+    </div>
+    <div class="main">
+        <div class="content">
+            <list class="content-item">
+                <list-item type="content-reply" class="content__reply">
+                    <div class="collect-wrap">
+                        <div class="content-text">
+                            <div class="content-text__content"> 
+                                <text>{{content}}</text>
+                            </div>
+                            <div class="copy" @click="longPress(content)">
+                                <image src="/Common/copy.png"></image>
+                                <text>复制文本</text>
+                            </div>
+                        </div>
+                    </div>
+                </list-item>
+            </list>
+            <div class="content-header-bg">
+                <text>{{dateNow}}</text>
+            </div>
+        </div>
+        <div class="recharge-btn" onclick="back">
+            <image class="recharge__icon" src="/Common/back.png"></image>
+            <text class="recharge__text">返回</text>
+        </div>
+    </div>
+    
+    <div class="footer-ad" if="{{footerAdShow}}" onclick="reportAdClick" onappear="reportAdShow">
+      <div class="footer-ad__img">
+        <block if="{{footerAd.icon}}">
+          <image class="footer-ad__img__icon" src="{{footerAd.icon}}"></image>
+        </block>
+        <image class="footer-ad__img__main" src="{{footerAd.imgUrlList ? footerAd.imgUrlList[0] : ''}}"></image>
+        <text class="click-btn__text">{{footerAd.clickBtnText || '查看详情'}}</text>
+      </div>
+      <div class="ad-tip">
+        <text>广告</text>
+      </div>
+    </div>
+    <short-cut></short-cut>
+  </div>
+</template>
+
+<script src="./index.js">
+</script>
+
+<style lang="less" scoped>
+  @import './index.less';
+</style>
